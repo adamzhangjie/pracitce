@@ -129,6 +129,23 @@ def getMachineSerial(systemType):
 			return False
 	# pass
 
+
+def parserSystemInfo():
+	systeminfo = {}
+	pat = r'(.*):(.*)'
+	sys_re = re.compile(pat)
+	# with open('system1.txt','rt') as f:
+	 p = os.popen('dmidecode -t 1')
+		for line in p:
+			m = sys_re.match(line)
+			if m:
+				systeminfo[m.group(1).strip()] = m.group(2).strip()
+
+	return systeminfo
+		
+
+
+
 def getIpList():
 	pass
 
@@ -145,4 +162,6 @@ print 'cpu_core_num is:',getCPUinfo('Linux')[0]
 print 'UUID is :', getMachineSerial('Linux')
 print 'isVM :', isVM('Linux')
 print 'os versino info:',getOSinfo('Linux')
+system_info = parserSystemInfo().copy()
+print system_info
 # print isVM('Linux')
