@@ -30,27 +30,28 @@ def getOSinfo_all():
 	
 	"""
 	agentPlatForm = platform.system()
-	print agentPlatForm
-	command_systeminfo = 'uname -a'
-	command_HDD_linux = 'df -h'
-	#get
-	systeminfo = os.system(command_systeminfo)
-	IPlist = socket.gethostbyname(socket.gethostname())
-	HDD_linux = os.popen(command_HDD_linux)
-	isx86_type = True
-	isvware_tpye = True
-	machine_tpye = '' #machine tpye include IBM_P IBM_I HUAWEI_X
-	machine_model = '' # machine version IBM P710 e.t.
-	machine_serialNum = ''
-	# p = subprocess.Popen(command,
-	# 					stdin = subprocess.PIPE,
-	# 					stdout = subprocess.PIPE,
-	# 					stderr = subprocess.STDOUT,
-	# 					shell = False,
-	# 					close_fds = sys.platform.startswith('win'),
-	# 					universal_newlines = True,
-	# 					env = os.environ)
-	return systeminfo, HDD_linux, IPlist
+	return agentPlatForm
+	# print agentPlatForm
+	# command_systeminfo = 'uname -a'
+	# command_HDD_linux = 'df -h'
+	# #get
+	# systeminfo = os.system(command_systeminfo)
+	# IPlist = socket.gethostbyname(socket.gethostname())
+	# # HDD_linux = os.popen(command_HDD_linux)
+	# isx86_type = True
+	# isvware_tpye = True
+	# machine_tpye = '' #machine tpye include IBM_P IBM_I HUAWEI_X
+	# machine_model = '' # machine version IBM P710 e.t.
+	# machine_serialNum = ''
+	# # p = subprocess.Popen(command,
+	# # 					stdin = subprocess.PIPE,
+	# # 					stdout = subprocess.PIPE,
+	# # 					stderr = subprocess.STDOUT,
+	# # 					shell = False,
+	# # 					close_fds = sys.platform.startswith('win'),
+	# # 					universal_newlines = True,
+	# # 					env = os.environ)
+	# return systeminfo, HDD_linux, IPlist
 
 def getDiskSpace(systemTpye):
 	'''get the Disk Space information
@@ -76,7 +77,7 @@ def getRaminfo(systemType):
 	'''
 	#Linux type
 	if systemType == 'Linux':
-		p = os.popen('free')
+		p = os.popen('free -h ')
 		p.readline()
 		RamInfo = p.readline()
 		return RamInfo.split()[1:4] 
@@ -91,7 +92,7 @@ def getCPUinfo(systemType):
 	if systemType == 'Linux':
 		CPUNum = cpu_count()
 		p = os.popen('lscpu')
-		cpu_arch = p.readline().splie()[1:1]
+		cpu_arch = p.readline().split()[1:][0]
 		return CPUNum,cpu_arch
 
 def isx86Arch(systemType):
@@ -105,34 +106,43 @@ def isx86Arch(systemType):
 
 def isVM(systemType):
 	if systemType == 'Linux':
-		p = os.popen('dmidecode | grep VMware')
+		p = os.popen('dmidecode -t 1 | grep VMware')
 		if p is not None:
+			# p.close()
 			return True
 		else:
 			return False
-	pass
-
+# IBM-P,IBM-I,HUAWEI-X类别
 def getMachineType():
 	if systemType == 'Linux':
-		p = os.popen('d')
-
+		p = os.popen('dmidecode -t 1 | grep Manufacturer')
+# 设备型号
 def getMachineModel():
 	pass
 
 def getMachineSerial(systemType):
 	if systemType == 'Linux':
-		p = os.popen('dmidecode | grep UUID')
+		p = os.popen('dmidecode -t 1 | grep UUID')
 		if p is not None:
-			return True
+			return p.readline().split()[1:][0]
 		else:
 			return False
-	pass
+	# pass
 
 def getIpList():
 	pass
 
+def getOSinfo(systemType):
+	if systemType == 'Linux':
+		p = os.popen('cat /etc/issue')
+		return p.readline().split()[:2]
+
 print getOSinfo_all()
-print getDiskSpace('Linux')
-print getRaminfo('Linux')
-print getCPUinfo('Linux')
-print getMachineSerial('Linux')
+print 'DiskSpace is:', getDiskSpace('Linux')
+print 'Ram is :', getRaminfo('Linux')[0]
+print 'cpu_arch is:', getCPUinfo('Linux')[1]
+print 'cpu_core_num is:',getCPUinfo('Linux')[0]
+print 'UUID is :', getMachineSerial('Linux')
+print 'isVM :', isVM('Linux')
+print 'os versino info:',getOSinfo('Linux')
+# print isVM('Linux')
