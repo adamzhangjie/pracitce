@@ -4,6 +4,7 @@
 import os
 import platform
 import sys
+from multiprocessing import cpu_count
 
 # Check we're not using an old version of Python. Do this before anything else
 # We need 2.7 above because some modules (like subprocess) were only introduced
@@ -18,7 +19,7 @@ if int(sys.version_info[1]) <= 3:
 import subprocess
 import socket
 
-def getOSInfo_all():
+def getOSinfo_all():
 	"""To obatin the System information
 	this method used to get OS infromation 
 	include all below items: 
@@ -79,6 +80,17 @@ def getRaminfo(systemType):
 		RamInfo = p.readline()
 		return RamInfo.split()[1:4] 
 
-print getOSInfo_all()
+def getCPUinfo(systemType):
+	'''get the CPU information
+	include below items:
+	1-CPUNum:
+	2-
+	'''
+	if systemType == 'Linux':
+		CPUNum = cpu_count()
+		return CPUNum
+
+print getOSinfo_all()
 print getDiskSpace('Linux')
 print getRaminfo('Linux')
+print getCPUinfo('Linux')
