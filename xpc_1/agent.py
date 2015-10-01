@@ -74,6 +74,7 @@ def getRaminfo(systemType):
 	3-freeRam:
 	return a list zip all the information
 	'''
+	#Linux type
 	if systemType == 'Linux':
 		p = os.popen('free')
 		p.readline()
@@ -86,11 +87,52 @@ def getCPUinfo(systemType):
 	1-CPUNum:
 	2-
 	'''
+	#Linux type
 	if systemType == 'Linux':
 		CPUNum = cpu_count()
-		return CPUNum
+		p = os.popen('lscpu')
+		cpu_arch = p.readline().splie()[1:1]
+		return CPUNum,cpu_arch
+
+def isx86Arch(systemType):
+	if systemType == 'Linux':
+		p = os.popen('lscpu')
+		cpu_arch = p.readline().splie()[1:2]
+		if cpu_arch[0].startswith('x86'):
+			return True
+		else:
+			return False
+
+def isVM(systemType):
+	if systemType == 'Linux':
+		p = os.popen('dmidecode | grep VMware')
+		if p is not None:
+			return True
+		else:
+			return False
+	pass
+
+def getMachineType():
+	if systemType == 'Linux':
+		p = os.popen('d')
+
+def getMachineModel():
+	pass
+
+def getMachineSerial(systemType):
+	if systemType == 'Linux':
+		p = os.popen('dmidecode | grep UUID')
+		if p is not None:
+			return True
+		else:
+			return False
+	pass
+
+def getIpList():
+	pass
 
 print getOSinfo_all()
 print getDiskSpace('Linux')
 print getRaminfo('Linux')
 print getCPUinfo('Linux')
+print getMachineSerial('Linux')
