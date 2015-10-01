@@ -1,9 +1,10 @@
-# agnet.py
-# !/usr/bin/env python
-# -*- encoding:utf-8 -*-
+# -*- coding: utf-8 -*-
+
+
 import os
 import platform
 import sys
+import re
 from multiprocessing import cpu_count
 
 # Check we're not using an old version of Python. Do this before anything else
@@ -135,15 +136,12 @@ def parserSystemInfo():
 	pat = r'(.*):(.*)'
 	sys_re = re.compile(pat)
 	# with open('system1.txt','rt') as f:
-	 p = os.popen('dmidecode -t 1')
-		for line in p:
-			m = sys_re.match(line)
-			if m:
-				systeminfo[m.group(1).strip()] = m.group(2).strip()
-
+	p = os.popen(r'dmidecode -t 1')
+	for line in p:
+		m = sys_re.match(line)
+		if m:
+			systeminfo[m.group(1).strip()] = m.group(2).strip()
 	return systeminfo
-		
-
 
 
 def getIpList():
