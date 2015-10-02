@@ -145,7 +145,8 @@ def parserSystemInfo():
 
 
 def getIpList():
-	pass
+	ip = socket.gethostbyname(socket.gethostname())
+	return ip
 
 def getOSinfo(systemType):
 	if systemType == 'Linux':
@@ -162,4 +163,5 @@ print 'isVM :', isVM('Linux')
 print 'os versino info:',getOSinfo('Linux')
 system_info = parserSystemInfo().copy()
 print system_info
+print 'IP is:', getIpList()
 # print isVM('Linux')
