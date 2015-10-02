@@ -153,15 +153,16 @@ def getOSinfo(systemType):
 		p = os.popen('cat /etc/issue')
 		return p.readline().split()[:2]
 
-print getOSinfo_all()
-print 'DiskSpace is:', getDiskSpace('Linux')
-print 'Ram is :', getRaminfo('Linux')[0]
-print 'cpu_arch is:', getCPUinfo('Linux')[1]
-print 'cpu_core_num is:',getCPUinfo('Linux')[0]
-print 'UUID is :', getMachineSerial('Linux')
-print 'isVM :', isVM('Linux')
-print 'os versino info:',getOSinfo('Linux')
-system_info = parserSystemInfo().copy()
-print system_info
-print 'IP is:', getIpList()
-# print isVM('Linux')
+if __name__ == '__main__':
+	print getOSinfo_all()
+	print 'DiskSpace is:', getDiskSpace('Linux')
+	print 'Ram is :', getRaminfo('Linux')[0]
+	print 'cpu_arch is:', getCPUinfo('Linux')[1]
+	print 'cpu_core_num is:',getCPUinfo('Linux')[0]
+	print 'UUID is :', getMachineSerial('Linux')
+	print 'isVM :', isVM('Linux')
+	print 'os versino info:',getOSinfo('Linux')
+	system_info = parserSystemInfo().copy()
+	print system_info
+	print 'IP is:', getIpList()
+	# print isVM('Linux')
