@@ -18,3 +18,7 @@ def parserSystemInfo():
 		
 system_info = parserSystemInfo().copy()
 print system_info
+
+
+
+conn=MySQLdb.connect(host='169.254.156.41',user='root',passwd='password',port=3306, db='cmdb')

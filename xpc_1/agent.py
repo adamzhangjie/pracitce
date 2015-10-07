@@ -20,6 +20,8 @@ if int(sys.version_info[1]) <= 3:
 import subprocess
 import socket
 
+
+
 def getOSinfo_all():
 	"""To obatin the System information
 	this method used to get OS infromation 
@@ -154,6 +156,16 @@ def getOSinfo(systemType):
 		return p.readline().split()[:2]
 
 if __name__ == '__main__':
+	server_static_dict_data = {
+	'server_sequence':'', 
+	'server_arch_type':'', 
+	'server_vm_type':'', 
+	'server_machine_type':'',
+	'server_machine_model':'', 
+	'server_cpuinfo':'',
+	'server_memoryinfo':'',
+	'server_diskinfo':''}
+	
 	print getOSinfo_all()
 	print 'DiskSpace is:', getDiskSpace('Linux')
 	print 'Ram is :', getRaminfo('Linux')[0]

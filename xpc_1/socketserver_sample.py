@@ -1,5 +1,4 @@
 # socketserver_sample.py
-# socket_server.py
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 import json
@@ -16,6 +15,7 @@ class Handler(StreamRequestHandler):
 		self.data = self.request.recv(1024).strip()
 		message_data = json.loads(self.data)
 		print message_data
+		print message_data['SKU Number']
 		self.wfile.write('thank you for connection')
 
 server = Server(('', 1234), Handler)

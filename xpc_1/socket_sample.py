@@ -8,7 +8,7 @@ import sys
 import json
 from agent import getOSinfo, parserSystemInfo
 
-HOST, PORT = "192.168.199.130", 1234
+HOST, PORT = "169.254.156.41", 1234
 
 # data = agent.getOSInfo('Linux')
 data = json.dumps(parserSystemInfo())
@@ -20,7 +20,7 @@ try:
     # Connect to server and send data
     sock.connect((HOST, PORT))
     # received = sock.recv(1024)
-    print data
+    # print data
     sock.sendall(data)
 
     # Receive data from the server and shut down
