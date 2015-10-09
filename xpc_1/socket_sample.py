@@ -8,7 +8,7 @@ import sys
 import json
 from operate_systeminfo_linux import ServerInfo_linux
 
-HOST, PORT = "169.254.55.93", 1234
+HOST, PORT = "12.99.151.180", 1234
 
 # data = agent.getOSInfo('Linux')
 server_info = ServerInfo_linux()
@@ -30,5 +30,5 @@ try:
 finally:
     sock.close()
 
-print "Sent:     {}".format(data)
-print "Received: {}".format(received)
+print data
+print received

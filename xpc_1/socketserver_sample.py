@@ -3,8 +3,8 @@
 
 import json
 from SocketServer import TCPServer, StreamRequestHandler, ForkingMixIn, ThreadingMixIn
-from store_data import StoreData
-import MySQLdb
+from store_data_oracle import StoreData
+import cx_Oracle as oc
 
 class Server(ThreadingMixIn, TCPServer):
 	pass
@@ -13,10 +13,12 @@ class Handler(StreamRequestHandler):
 
 	def handle(self):
 		addr = self.request.getpeername()
-		print 'Got connection from', addr
+		print ''
+		print ''
+		print '------------------Got connection from-------------------', addr
 		self.data = self.request.recv(1024).strip()
 		message_data = json.loads(self.data)
-		conn = MySQLdb.connect(host='169.254.55.93',user='root',passwd='password',port=3306, db='cmdb')
+		conn = oc.Connection('jpre/jpre@NBCB_8.99.1.68')
 		try:
 			st_data = StoreData(conn)
 			server_dict_data=message_data.copy()
