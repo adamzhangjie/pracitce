@@ -6,12 +6,14 @@
 import socket
 import sys
 import json
-from agent import getOSinfo, parserSystemInfo
+from operate_systeminfo_linux import ServerInfo_linux
 
-HOST, PORT = "169.254.156.41", 1234
+HOST, PORT = "169.254.55.93", 1234
 
 # data = agent.getOSInfo('Linux')
-data = json.dumps(parserSystemInfo())
+server_info = ServerInfo_linux()
+server_info.getOrganizedInfo()
+data = json.dumps(server_info.server_static_dict_data)
 
 # Create a socket (SOCK_STREAM means a TCP socket)
 sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
